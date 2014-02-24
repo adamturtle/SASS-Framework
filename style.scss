@@ -1,0 +1,32 @@
+// Define config options (optional, defaults shown)
+
+//$container-width: 960;
+//$cols:            12;
+//$cols-padding:    15px;
+
+// Import the framework
+@import 'framework';
+
+/*
+ | -------------------------------------------------------------------
+ | Begin Main CSS 
+ | -------------------------------------------------------------------
+ */
+  
+img {
+   @include img-responsive();
+}
+
+@include media-query(tablet-portrait) {
+   .main {
+      @include two-thirds();
+
+      img {
+         @include one-half();
+      }
+   }
+
+   .sidebar {
+      @include one-third();
+   }
+}

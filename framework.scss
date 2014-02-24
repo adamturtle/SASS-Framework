@@ -1,0 +1,177 @@
+/*!
+ * Grid Framework v0.1
+ * Copyright 2014 Adam Turtle.
+ * Licensed under MIT (http://opensource.org/licenses/MIT)
+ */
+
+//|-------------------------------------------------------------------
+//| Config
+//|-------------------------------------------------------------------
+
+// Columns
+$cols:                  12    !default;
+$cols-padding:          15px  !default;
+
+// Responsive Breakpoints
+$mq-tablet-portrait:    640   !default;  
+$mq-tablet-landscape:   960   !default;
+$mq-desktop:            1024  !default;
+$mq-large-desktop:      1280  !default;
+
+/*
+| -------------------------------------------------------------------
+|  Mixins
+| -------------------------------------------------------------------
+*/
+
+// Column mixin
+@mixin cols($number:4){
+   $width: percentage($number/$cols);
+   width: $width;
+   position: relative;
+   min-height: 1px;
+   padding-left: $cols-padding;
+   padding-right: $cols-padding;
+   float: left;
+   box-sizing: border-box;   
+}
+
+// Column helpers
+// One
+@mixin one-half(){
+   @include cols($cols/2);
+}
+
+@mixin one-third(){
+   @include cols($cols/3);
+}
+
+@mixin one-quarter(){
+   @include cols($cols/4);
+}
+
+@mixin one-fifth(){
+   @include cols($cols/5);
+}
+
+@mixin one-sixth(){
+   @include cols($cols/6);
+}
+
+// Two
+@mixin two-thirds(){
+   @include cols(($cols/3)*2);
+}
+
+@mixin two-fifths(){
+   @include cols(($cols/5)*2);
+}
+
+// Three
+@mixin three-quarters(){
+   @include cols(($cols/4)*3);
+}
+
+@mixin three-fifths(){
+   @include cols(($cols/5)*3);
+}
+
+// Row 
+@mixin row($breakpoint:4){
+   //&:nth-child($breakpoint + n + ($breakpoint + 1) ){
+   &:nth-child(#{$breakpoint}n+#{$breakpoint+1}){
+      clear:left;
+   }
+}
+
+// Responsive images
+@mixin img-responsive(){
+   display: block;   
+   max-width: 100%;
+   height: auto;
+}
+
+@mixin not-responsive(){
+   display: inline-block;
+   max-width: none;
+   height: auto;
+}
+
+// Responsive sizes
+@mixin media-query($size) {
+   /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+   @if $size == tablet-portrait {
+      @media (min-width: #{$mq-tablet-portrait +1}px) { @content; }
+   }
+   /* tablet, landscape iPad, lo-res laptops ands desktops */
+   @else if $size == tablet-landscape {
+      @media (min-width: #{$mq-tablet-landscape +1}px) { @content; }
+   }
+   /* big landscape tablets, laptops, and desktops */
+   @else if $size == desktop {
+      @media (min-width: #{$mq-desktop +1}px)  { @content; }
+   }
+   /* hi-res laptops and desktops */
+   @else if $size == large-desktop {
+      @media (min-width: #{$mq-large-desktop +1}px)  { @content; }
+   }
+}
+
+/*
+| -------------------------------------------------------------------
+|  Framework CSS
+| -------------------------------------------------------------------
+*/
+
+html,body {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   font: 16px/1.5em "Helvetica Neue", Helvetica, Arial, sans-serif normal normal;
+}
+
+a {
+   text-decoration: none;   
+}
+
+// Clearfix
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+   clear: both;
+}
+
+.container {
+   margin: 0 auto;
+   @extend .clearfix;
+}
+
+@include media-query(tablet-portrait){   
+   .container {
+      width: $mq-tablet-portrait + px;
+   }   
+}
+
+@include media-query(tablet-landscape){   
+   .container {
+      width: $mq-tablet-landscape + px;
+   }   
+}
+
+@include media-query(desktop){   
+   .container {
+      width: $mq-desktop + px;
+   }   
+}
+
+@include media-query(large-desktop){   
+   .container {
+      width: $mq-large-desktop + px;
+   }   
+}
